@@ -157,13 +157,6 @@
       "dependencies": {},
       "hash": "d101e5d64337681ec17093f88fb1ea01d07a55f4"
     },
-    "teammoonstorm-moonstormsharedutils": {
-      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git#2.0Dev",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "09cb67124ac2342b497153d90864db0faff39e4f"
-    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
