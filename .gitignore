@@ -80,11 +80,11 @@ MSUTemplate/Packages/*
 ## wwise ##
 ##-------##
 
-MSUTemplate/WwiseProject/.cache/
-MSUTemplate/WwiseProject/*.prof
-MSUTemplate/WwiseProject/*_WwiseProject.*.validationcache
-MSUTemplate/WwiseProject/*_WwiseProject.*.wsettings
-MSUTemplate/WwiseProject/**/*.akd
+MSUTemplate/MSUTemplate_WwiseProject/.cache/
+MSUTemplate/MSUTemplate_WwiseProject/*.prof
+MSUTemplate/MSUTemplate_WwiseProject/*_WwiseProject.*.validationcache
+MSUTemplate/MSUTemplate_WwiseProject/*_WwiseProject.*.wsettings
+MSUTemplate/MSUTemplate_WwiseProject/**/*.akd
 
 MSUTemplate/Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset*
 
