@@ -11,14 +11,10 @@ using RoR2.ContentManagement;
 
 namespace MSUTemplate
 {
-    //This is a class which all Elites from your mod inherit from, it inherits from both IEliteContentPiece
-    //and IContentPackModifier.
-    //See "AffixBrown" for an example on how to use this.
-
     /// <summary>
     /// <inheritdoc cref="IEliteContentPiece"/>
     /// </summary>
-    public abstract class ExampleModEliteEquipment : IEliteContentPiece, IContentPackModifier
+    public abstract class MSUTEliteEquipment : IEliteContentPiece, IContentPackModifier
     {
         /// <summary>
         /// <inheritdoc cref="IEliteContentPiece.EliteDefs"/>
@@ -28,24 +24,18 @@ namespace MSUTemplate
         /// The EliteAssetCollection for this Elite. Populated when the Elite's assets loads, cannot be null.
         /// </summary>
         public EliteAssetCollection assetCollection { get; private set; }
-        /// <summary>
-        /// <inheritdoc cref="IEquipmentContentPiece.ItemDisplayPrefabs"/>
-        /// </summary>
         public NullableRef<List<GameObject>> itemDisplayPrefabs { get; protected set; } = new List<GameObject>();
-        /// <summary>
-        /// <inheritdoc cref="IContentPiece{T}.Asset"/>
-        /// </summary>
         public EquipmentDef equipmentDef { get; protected set; }
 
-        List<EliteDef> IEliteContentPiece.EliteDefs => eliteDefs;
-        NullableRef<List<GameObject>> IEquipmentContentPiece.ItemDisplayPrefabs => itemDisplayPrefabs;
-        EquipmentDef IContentPiece<EquipmentDef>.Asset => equipmentDef;
+        List<EliteDef> IEliteContentPiece.eliteDefs => eliteDefs;
+        NullableRef<List<GameObject>> IEquipmentContentPiece.itemDisplayPrefabs => itemDisplayPrefabs;
+        EquipmentDef IContentPiece<EquipmentDef>.asset => equipmentDef;
 
 
         /// <summary>
         /// Method for loading an AssetRequest for this class. This will later get loaded Asynchronously.
         /// </summary>
-        /// <returns>An ExampleAssetRequest that loads an EliteAssetCollection</returns>
+        /// <returns>An MSUTAssetRequest that loads an EliteAssetCollection</returns>
         public abstract MSUTAssetRequest<EliteAssetCollection> LoadAssetRequest();
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);

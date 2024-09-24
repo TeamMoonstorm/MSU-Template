@@ -33,7 +33,8 @@
         "R2API.Dot.dll",
         "R2API.Elites.dll",
         "R2API.RecalculateStats.dll",
-        "R2API.Director.dll"
+        "R2API.Director.dll",
+        "Unity.ResourceManager.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [

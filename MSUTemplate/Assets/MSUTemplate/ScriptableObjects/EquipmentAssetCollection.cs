@@ -5,7 +5,7 @@ using MSU;
 
 namespace MSUTemplate
 {
-    [CreateAssetMenu(fileName = "EquipmentAssetCollection", menuName = "ExampleMod/AssetCollections/EquipmentAssetCollection")]
+    [CreateAssetMenu(fileName = "EquipmentAssetCollection", menuName = "MSUTemplateAssetCollections/EquipmentAssetCollection")]
     public class EquipmentAssetCollection : ExtendedAssetCollection
     {
         public NullableRef<List<GameObject>> itemDisplayPrefabs;

@@ -11,14 +11,10 @@ using RoR2.ContentManagement;
 
 namespace MSUTemplate
 {
-    //This is a class which all Non Elite Equipments from your mod inherit from, it inherits from both
-    //IEquipmentContentPiece and IContentPackModifier.
-    //See "Pinnata" for an example on how to use this.
-
     /// <summary>
     /// <inheritdoc cref="IEquipmentContentPiece"/>
     /// </summary>
-    public abstract class ExampleModEquipment : IEquipmentContentPiece, IContentPackModifier
+    public abstract class MSUTEquipment : IEquipmentContentPiece, IContentPackModifier
     {
         /// <summary>
         /// The EquipmentAssetCollection for this Artifact. Populated when the Artifact gets it's assets loaded, can be null.
@@ -34,14 +30,14 @@ namespace MSUTemplate
         /// </summary>
         public EquipmentDef equipmentDef { get; protected set; }
         
-        NullableRef<List<GameObject>> IEquipmentContentPiece.ItemDisplayPrefabs => itemDisplayPrefabs;
-        EquipmentDef IContentPiece<EquipmentDef>.Asset => equipmentDef;
+        NullableRef<List<GameObject>> IEquipmentContentPiece.itemDisplayPrefabs => itemDisplayPrefabs;
+        EquipmentDef IContentPiece<EquipmentDef>.asset => equipmentDef;
 
 
         /// <summary>
         /// Method for loading an AssetRequest for this class. This will later get loaded Asynchronously.
         /// </summary>
-        /// <returns>An ExampleAssetRequest</returns>
+        /// <returns>An MSUTAssetRequest</returns>
         public abstract MSUTAssetRequest LoadAssetRequest();
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);

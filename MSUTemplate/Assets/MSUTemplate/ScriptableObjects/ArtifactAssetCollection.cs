@@ -8,7 +8,7 @@ using MSU;
 namespace MSUTemplate
 {
     /// <summary>
-    /// Represents an <see cref="ExtendedAssetCollection"/> that contains the assets for a <see cref="ExampleModArtifact"/>
+    /// Represents an <see cref="ExtendedAssetCollection"/> that contains the assets for a <see cref="MSUTArtifact"/>
     /// </summary>
     [CreateAssetMenu(fileName = "ArtifactAssetCollection", menuName = "MSUTemplate/AssetCollections/ArtifactAssetCollection")]
     public class ArtifactAssetCollection : ExtendedAssetCollection

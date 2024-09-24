@@ -14,23 +14,22 @@ namespace MSUTemplate
     /// <summary>
     /// <inheritdoc cref="IVoidItemContentPiece"/>
     /// </summary>
-    public abstract class ExampleModVoidItem : IVoidItemContentPiece, IContentPackModifier
+    public abstract class MSUTVoidItem : IVoidItemContentPiece, IContentPackModifier
     {
-        public ItemAssetCollection AssetCollection { get; private set; }
-        public NullableRef<List<GameObject>> ItemDisplayPrefabs { get; protected set; } = new List<GameObject>();
-        public ItemDef ItemDef { get; protected set; }
+        public ItemAssetCollection assetCollection { get; private set; }
+        public NullableRef<List<GameObject>> itemDisplayPrefabs { get; protected set; } = new List<GameObject>();
+        public ItemDef itemDef { get; protected set; }
 
-        ItemDef IContentPiece<ItemDef>.Asset => ItemDef;
-        NullableRef<List<GameObject>> IItemContentPiece.ItemDisplayPrefabs => ItemDisplayPrefabs;
-
-        public abstract MSUTAssetRequest AssetRequest();
+        ItemDef IContentPiece<ItemDef>.asset => itemDef;
+        NullableRef<List<GameObject>> IItemContentPiece.itemDisplayPrefabs => itemDisplayPrefabs;
 
 
+        public abstract MSUTAssetRequest LoadAssetRequest();
         public abstract void Initialize();
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            MSUTAssetRequest request = AssetRequest();
+            MSUTAssetRequest request = LoadAssetRequest();
 
             request.StartLoad();
             while (!request.isComplete)
@@ -38,14 +37,14 @@ namespace MSUTemplate
 
             if (request.boxedAsset is ItemAssetCollection collection)
             {
-                AssetCollection = collection;
+                assetCollection = collection;
 
-                ItemDef = AssetCollection.itemDef;
-                ItemDisplayPrefabs = AssetCollection.itemDisplayPrefabs;
+                itemDef = assetCollection.itemDef;
+                itemDisplayPrefabs = assetCollection.itemDisplayPrefabs;
             }
             else if (request.boxedAsset is ItemDef def)
             {
-                ItemDef = def;
+                itemDef = def;
             }
             else
             {
@@ -55,7 +54,7 @@ namespace MSUTemplate
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {
-            contentPack.AddContentFromAssetCollection(AssetCollection);
+            contentPack.AddContentFromAssetCollection(assetCollection);
         }
 
         public abstract List<ItemDef> GetInfectableItems();

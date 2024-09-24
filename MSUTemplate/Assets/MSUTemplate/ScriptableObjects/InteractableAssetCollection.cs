@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using MSU;
 namespace MSUTemplate
 {
-    [CreateAssetMenu(fileName = "InteractableAssetCollection", menuName = "ExampleMod/AssetCollections/InteractableAssetCollection")]
+    [CreateAssetMenu(fileName = "InteractableAssetCollection", menuName = "MSUTemplateAssetCollections/InteractableAssetCollection")]
     public class InteractableAssetCollection : ExtendedAssetCollection
     {
         public GameObject interactablePrefab;
-        public InteractableCardProvider interactableCardProvider;
+        public NullableRef<InteractableCardProvider> interactableCardProvider;
     }
 }

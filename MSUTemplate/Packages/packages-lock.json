@@ -275,16 +275,16 @@
       "dependencies": {}
     },
     "riskofthunder-ror2editorkit": {
-      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#5.2.0",
+      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#5.2.1",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "7c2fe25c2817fa313a8be2f61c7d59f765de2dac"
+      "hash": "88d3b2ec4317d7fc9c6e2364405197d41b42e505"
     },
     "riskofthunder-ror2importextensions": {
-      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#",
+      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
@@ -303,11 +303,11 @@
       "dependencies": {}
     },
     "teammoonstorm-moonstormsharedutils": {
-      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git#2.0Dev",
+      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "09cb67124ac2342b497153d90864db0faff39e4f"
+      "hash": "e73ea26962a27b42383f87f78e3d0ef00866193c"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

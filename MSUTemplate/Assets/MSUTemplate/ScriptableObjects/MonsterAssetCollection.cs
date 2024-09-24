@@ -4,7 +4,7 @@ using MSU;
 using System.Collections.Generic;
 namespace MSUTemplate
 {
-    [CreateAssetMenu(fileName = "MonsterAssetCollection", menuName = "ExampleMod/AssetCollections/MonsterAssetCollection")]
+    [CreateAssetMenu(fileName = "MonsterAssetCollection", menuName = "MSUTemplateAssetCollections/MonsterAssetCollection")]
     public class MonsterAssetCollection : BodyAssetCollection
     {
         public MonsterCardProvider monsterCardProvider;

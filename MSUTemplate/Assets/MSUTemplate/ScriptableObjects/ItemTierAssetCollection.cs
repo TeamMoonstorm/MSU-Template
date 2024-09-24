@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace MSUTemplate
 {
-    [CreateAssetMenu(fileName = "ItemTierAssetCollection", menuName = "ExampleMod/AssetCollections/ItemTierAssetCollection")]
+    [CreateAssetMenu(fileName = "ItemTierAssetCollection", menuName = "MSUTemplateAssetCollections/ItemTierAssetCollection")]
     public class ItemTierAssetCollection : ExtendedAssetCollection
     {
         public SerializableColorCatalogEntry colorIndex;

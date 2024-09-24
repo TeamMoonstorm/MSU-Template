@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MSUTemplate
 {
-    [CreateAssetMenu(fileName = "SurvivorAssetCollection", menuName = "ExampleMod/AssetCollections/SurvivorAssetCollection")]
+    [CreateAssetMenu(fileName = "SurvivorAssetCollection", menuName = "MSUTemplateAssetCollections/SurvivorAssetCollection")]
     public class SurvivorAssetCollection : BodyAssetCollection
     {
         public SurvivorDef survivorDef;

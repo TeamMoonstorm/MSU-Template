@@ -57,7 +57,7 @@ namespace MSUTemplate
                 yield return null;
 
             _parallelPreLoadDispatchers.Start(); //We call the pre load methods and await all of them.
-            while (!_parallelPreLoadDispatchers.IsDone()) yield return null;
+            while (!_parallelPreLoadDispatchers.isDone) yield return null;
 
             //This is what loads and initializes our content, it'll automatically report progress back to our game, which will be used
             //during the loading screen.
@@ -70,7 +70,7 @@ namespace MSUTemplate
             }
 
             _parallelPostLoadDispatchers.Start(); //We call the post load methods and await all of them
-            while (!_parallelPostLoadDispatchers.IsDone) yield return null;
+            while (!_parallelPostLoadDispatchers.isDone) yield return null;
 
             //This assigns our content to our desired static classes.
             for (int i = 0; i < _fieldAssignDispatchers.Length; i++)
@@ -110,36 +110,37 @@ namespace MSUTemplate
             yield break;
         }
 
-        //We use this method to load our expansiondef and nothing else.
-        private IEnumerator AddExampleExpansionDef()
+        //AsyncAssetLoad attributes can be used to call multiple coroutines at the same time that load assets, more info
+        //can be found in its documentation.
+        private IEnumerator CallAsyncAssetLoadAttributes()
         {
-            yield break;
+            var routine = AsyncAssetLoadAttribute.CreateCoroutineForMod(MSUTMain.instance);
+            routine.Start();
+            while (!routine.isDone)
+                yield return null;
         }
 
         //Constructor for our content pack
         internal MSUTContent()
         {
-            ContentManager.collectContentPackProviders += AddSelf;
-            MSUTAssets.onExampleAssetsInitialized += () =>
-            {
-                _parallelPreLoadDispatchers.Add(AddExampleExpansionDef);
-            };
+            ContentManager.collectContentPackProviders += AddSelf; //Make sure we add our pack provider to the game's system
+            _parallelPreLoadDispatchers.Add(CallAsyncAssetLoadAttributes);
         }
 
         static MSUTContent()
         {
-            MSUTMain main = MSUTMain.instance;
-            _loadDispatchers = new Func<IEnumerator>[]
+            MSUTMain main = MSUTMain.instance; //get a direct reference to our plugin for ease of access
+            _loadDispatchers = new Func<IEnumerator>[] //Create our array that will initialize our mod.
             {
-                () =>
+                () => 
                 {
-                    ItemModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<ItemDef>(main, msuTemplateContentPack));
+                    //This is the basic syntax of utilizing a module from MSU for initializing our content, we call 
+                    //AddProvider to let the module know we're adding new content. And also create a simple content
+                    //provider utilizing the ContentUtil class.
+                    ItemModule.AddProvider(main, ContentUtil.CreateGenericContentPieceProvider<ItemDef>(main, msuTemplateContentPack));
+
+                    //Then we directly return the coroutine that initializes our items
                     return ItemModule.InitializeItems(main);
-                },
-                () =>
-                {
-                    EquipmentModule.AddProvider(main, ContentUtil.CreateContentPieceProvider<EquipmentDef>(main, msuTemplateContentPack));
-                    return EquipmentModule.InitializeEquipments(main);
                 },
                 LoadFromAssetBundles
             };
@@ -147,18 +148,12 @@ namespace MSUTemplate
             _fieldAssignDispatchers = new Action[]
             {
                 () => ContentUtil.PopulateTypeFields(typeof(Items), msuTemplateContentPack.itemDefs),
-                () => ContentUtil.PopulateTypeFields(typeof(Equipments), msuTemplateContentPack.equipmentDefs)
             };
         }
 
         public static class Items
         {
             public static ItemDef ExampleItem;
-        }
-
-        public static class Equipments
-        {
-            public static EquipmentDef ExampleEquipment;
         }
     }
 }

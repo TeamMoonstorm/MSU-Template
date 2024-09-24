@@ -8,30 +8,24 @@ using UnityEngine;
 
 namespace MSUTemplate
 {
-    //This is a class which all Artifacts from your mod inherit from, it inherits from both IArtifactContentPiece
-    //and IContentPackModifier.
-    //See "Artifact of REDACTED" for an example on how to use this.
-
     /// <summary>
     /// <inheritdoc cref="IArtifactContentPiece"/>
     /// </summary>
-    public abstract class ExampleModArtifact : IArtifactContentPiece, IContentPackModifier
+    public abstract class MSUTArtifact : IArtifactContentPiece, IContentPackModifier
     {
         /// <summary>
         /// The ArtifactAssetCollection for this Artifact. Populated when the Artifact gets it's assets loaded, can be null.
         /// </summary>
         public NullableRef<ArtifactAssetCollection> assetCollection { get; private set; }
-        
         /// <inheritdoc cref="IArtifactContentPiece.ArtifactCode"/>
         public NullableRef<ArtifactCode> artifactCode { get; protected set; }
-
         /// <summary>
         /// <inheritdoc cref="IContentPiece{T}.Asset"/>
         /// </summary>
         public ArtifactDef artifactDef { get; protected set; }
 
-        NullableRef<ArtifactCode> IArtifactContentPiece.ArtifactCode => artifactCode;
-        ArtifactDef IContentPiece<ArtifactDef>.Asset => artifactDef;
+        NullableRef<ArtifactCode> IArtifactContentPiece.artifactCode => artifactCode;
+        ArtifactDef IContentPiece<ArtifactDef>.asset => artifactDef;
 
         /// <summary>
         /// Method for loading an AssetRequest for this class. This will later get loaded Asynchronously.

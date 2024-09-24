@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace MSUTemplate
 {
-    [CreateAssetMenu(fileName = "BodyAssetCollection", menuName = "ExampleMod/AssetCollections/BodyAssetCollection")]
+    [CreateAssetMenu(fileName = "BodyAssetCollection", menuName = "MSUTemplateAssetCollections/BodyAssetCollection")]
     public class BodyAssetCollection : ExtendedAssetCollection
     {
         public GameObject bodyPrefab;

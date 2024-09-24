@@ -83,19 +83,7 @@ namespace MSUTemplate
         /// <summary>
         /// Fired when all the AssetBundles from the mod are loaded into memory, this in turn gets fired during Content Pack Loading and as such should be used to implement new async loading calls to <see cref="MSUTContent._parallelPreLoadDispatchers"/>
         /// </summary>
-        public static event Action onExampleAssetsInitialized
-        {
-            add
-            {
-                _onExampleAssetsInitialized -= value;
-                _onExampleAssetsInitialized += value;
-            }
-            remove
-            {
-                _onExampleAssetsInitialized -= value;
-            }
-        }
-        private static Action _onExampleAssetsInitialized;
+        public static ResourceAvailability assetsAvailability;
 
         /// <summary>
         /// Returns the AssetBundle that's tied to the supplied enum value.
@@ -256,10 +244,10 @@ namespace MSUTemplate
             multiStartCoroutine.Add(SwapShaders);
             multiStartCoroutine.Add(SwapAddressableShaders);
 
-            while (!multiStartCoroutine.IsDone) yield return null;
+            while (!multiStartCoroutine.isDone) yield return null;
 
             //Asset bundles have been loaded and shaders have been swapped, invoke method.
-            _onExampleAssetsInitialized?.Invoke();
+            assetsAvailability.MakeAvailable();
             yield break;
         }
 
@@ -303,19 +291,19 @@ namespace MSUTemplate
         private static IEnumerator LoadFromPath(List<(string path, MSUTBundle bundleEnum, AssetBundle loadedBundle)> list, string path, int index, int totalPaths)
         {
             string fileName = Path.GetFileName(path);
-            MSUTBundle? exampleBundle = null;
+            MSUTBundle? msutBundle = null;
             //When you add new AssetBundles, you should add new Cases to this switch clause for your new bundles, for example, if you
             //where to add an "Artifacts" bundle, you'd write the following line (which is commented in this scenario.) this is all you
             //need to do to get new asset bundles loading.
             switch (fileName)
             {
-                case MAIN: exampleBundle = MSUTBundle.Main; break;
-                case ITEMS: exampleBundle = MSUTBundle.Items; break;
-                case EQUIPMENTS: exampleBundle = MSUTBundle.Equipments; break;
+                case MAIN: msutBundle = MSUTBundle.Main; break;
+                case ITEMS: msutBundle = MSUTBundle.Items; break;
+                case EQUIPMENTS: msutBundle = MSUTBundle.Equipments; break;
                 //case ARTIFACTS: exampleBundle = ExampleBundle.Artifacts; break;
 
                 //This path does not match any of the non scene bundles, could be a scene, we will mark these on only this ocassion as "StreamedScene".
-                default: exampleBundle = MSUTBundle.StreamedScene; break;
+                default: msutBundle = MSUTBundle.StreamedScene; break;
             }
 
             var request = AssetBundle.LoadFromFileAsync(path);
@@ -333,7 +321,7 @@ namespace MSUTemplate
             }
 
             //The switch statement considered this a streamed scene bundle
-            if (exampleBundle == MSUTBundle.StreamedScene)
+            if (msutBundle == MSUTBundle.StreamedScene)
             {
                 //supposed bundle is not streamed scene? throw exception.
                 if (!bundle.isStreamedSceneAssetBundle)
@@ -349,7 +337,7 @@ namespace MSUTemplate
             }
 
             //The switch statement considered this to not be a streamed scene bundle, but an assets bundle.
-            list.Add((path, exampleBundle.Value, bundle));
+            list.Add((path, msutBundle.Value, bundle));
             yield break;
         }
 
@@ -462,7 +450,7 @@ namespace MSUTemplate
     /// A class that represents a request for loading Assets asynchronously.
     /// <br>You're strongly advised to use and check out <see cref="MSUTAssetRequest{TAsset}"/> instead.</br>
     /// </summary>
-    public abstract class MSUTAssetRequest
+    public abstract class MSUTAssetRequest : IEnumerator
     {
         /// <summary>
         /// The loaded asset, boxed as a Unity Object.
@@ -503,6 +491,17 @@ namespace MSUTemplate
             }
         }
 
+        object IEnumerator.Current
+        {
+            get
+            {
+                if (internalCoroutine == null)
+                    StartLoad();
+
+                return internalCoroutine.Current;
+            }
+        }
+
         /// <summary>
         /// The coroutine that's loading the assets
         /// </summary>
@@ -539,6 +538,19 @@ namespace MSUTemplate
         /// </summary>
         /// <returns>A coroutine</returns>
         protected abstract IEnumerator LoadMultipleAsset();
+
+        bool IEnumerator.MoveNext()
+        {
+            if (internalCoroutine == null)
+                StartLoad();
+            return internalCoroutine.MoveNext();
+        }
+
+        void IEnumerator.Reset()
+        {
+            if(internalCoroutine != null)
+                internalCoroutine.Reset();
+        }
 
         /// <summary>
         /// Constructor for an MSUTAssetRequest that'll load a single asset
